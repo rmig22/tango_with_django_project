@@ -48,14 +48,13 @@ def index(request):
     context_dict['categories'] = category_list
     context_dict['pages'] = page_list
 
-    response =  render(request, 'rango/index.html', context=context_dict)
     visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-    response = render(request, 'rango/index.html', context=context_dict)
-    return response
+    
+    return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
-    context_dict = {'boldmessage': 'This tutorial has been put together by RImoc.'}
+    visitor_cookie_handler(request)
+    context_dict = {'boldmessage': 'This tutorial has been put together by RImoc.', 'visits':request.session.get('visits', 0)}
     return render(request, 'rango/about.html', context=context_dict)
 
 def show_category(request, category_name_slug):
